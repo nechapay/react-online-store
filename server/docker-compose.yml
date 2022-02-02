@@ -1,0 +1,24 @@
+version: "3.9"
+services:
+  postgres:
+    container_name: online-store-db
+    image: postgres:11.0
+    environment:
+      POSTGRES_DB: "online-store"
+      POSTGRES_USER: "dev"
+      POSTGRES_PASSWORD: "a159357z"
+    volumes:
+       - /srv/docker/postgresql2/data:/var/lib/postgresql/data
+    ports:
+      - "54311:5432"
+    restart: unless-stopped  
+
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user@domain.com
+      PGADMIN_DEFAULT_PASSWORD: SuperSecret
+    ports:
+      - "5050:80"
