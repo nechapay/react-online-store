@@ -1,9 +1,7 @@
 const Router = require('express')
 const router = new Router()
+const TypeController = require('../controllers/typeController')
 
-router.post('/', (req, res) => {})
-router.get('/', (req, res) => {})
-router.get('/:id', (req, res) => {})
-
-
+router.post('/', TypeController.create)
+router.get('/', TypeController.getAll)
 module.exports = router
