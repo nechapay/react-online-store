@@ -1,27 +1,24 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Card, Col, Container, Image, Row } from 'react-bootstrap'
 import bigStar from '../assets/bigStar.png'
+import { useParams } from 'react-router-dom'
+import { observer } from 'mobx-react-lite'
+import { fetchSingleDevice } from '../http/deviceApi'
 
-const DevicePage = () => {
-  const device = {
-    id: 1,
-    name: 'iPhone 12 pro',
-    price: 100000,
-    rating: 5,
-    img: 'https://mgppu.ru/resources/images/300x300.png'
-  }
-  const description = [
-    { id: 1, title: 'Оперативная память', description: '5гб' },
-    { id: 1, title: 'Камера', description: '12мп' },
-    { id: 1, title: 'Процессор', description: 'Пентиум 3' },
-    { id: 1, title: 'Кол-во ядер', description: '2' },
-    { id: 1, title: 'Аккумулятор', description: '4000' }
-  ]
+const DevicePage = observer(() => {
+  const [device, setDevice] = useState({ info: [] })
+  const { id } = useParams()
+  useEffect(() => {
+    fetchSingleDevice(id).then((data) => setDevice(data))
+  }, [id])
+
   return (
     <Container className="mt-3">
       <Row>
         <Col md={4} className="d-flex flex-column align-items-center justify-content-center">
-          <Image width={300} height={300} src={device.img} />
+          <div className="d-flex justify-content-center align-items-center" style={{ width: '300px', height: '300px' }}>
+            <Image src={process.env.REACT_APP_API_URL + device.img} style={{ maxWidth: '100%', maxHeight: '100%' }} />
+          </div>
         </Col>
         <Col md={4}>
           <Row className="d-flex flex-column align-items-center justify-content-center">
@@ -52,7 +49,7 @@ const DevicePage = () => {
       </Row>
       <Row className="d-flex flex-column m-3">
         <h1>Характеристики</h1>
-        {description.map((info, index) => (
+        {device.info.map((info, index) => (
           <Row key={info.id} style={{ background: index % 2 === 0 ? 'lightgrey' : 'transparent', padding: 10 }}>
             {info.title}: {info.description}
           </Row>
@@ -60,6 +57,6 @@ const DevicePage = () => {
       </Row>
     </Container>
   )
-}
+})
 
 export default DevicePage

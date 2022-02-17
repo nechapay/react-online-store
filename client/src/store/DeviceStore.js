@@ -2,57 +2,14 @@ import { makeAutoObservable } from 'mobx'
 
 export default class DeviceStore {
   constructor() {
-    this._types = [
-      { id: 1, name: 'Холодильники' },
-      { id: 2, name: 'Смартфоны' },
-      { id: 3, name: 'Ноутбуки' },
-      { id: 4, name: 'Телевизоры' }
-    ]
-    this._brands = [
-      { id: 1, name: 'Samsung' },
-      { id: 2, name: 'Apple' },
-      { id: 3, name: 'Lenovo' },
-      { id: 4, name: 'Asus' }
-    ]
-    this._devices = [
-      {
-        id: 1,
-        name: 'iPhone 12 pro',
-        price: 100000,
-        rating: 5,
-        img: 'https://mgppu.ru/resources/images/300x300.png'
-      },
-      {
-        id: 2,
-        name: 'iPhone 12 pro',
-        price: 100000,
-        rating: 5,
-        img: 'https://mgppu.ru/resources/images/300x300.png'
-      },
-      {
-        id: 3,
-        name: 'iPhone 12 pro',
-        price: 100000,
-        rating: 5,
-        img: 'https://mgppu.ru/resources/images/300x300.png'
-      },
-      {
-        id: 4,
-        name: 'iPhone 12 pro',
-        price: 100000,
-        rating: 5,
-        img: 'https://mgppu.ru/resources/images/300x300.png'
-      },
-      {
-        id: 5,
-        name: 'iPhone 12 pro',
-        price: 100000,
-        rating: 5,
-        img: 'https://mgppu.ru/resources/images/300x300.png'
-      }
-    ]
+    this._types = []
+    this._brands = []
+    this._devices = []
     this._selectedType = {}
     this._selectedBrand = {}
+    this._page = 1
+    this._totalCount = 0
+    this._limit = 10
     makeAutoObservable(this)
   }
 
@@ -69,11 +26,25 @@ export default class DeviceStore {
   }
 
   setSelectedType(type) {
+    this.setPage(1)
     this._selectedType = type
   }
 
   setSelectedBrand(brand) {
+    this.setPage(1)
     this._selectedBrand = brand
+  }
+
+  setPage(page) {
+    this._page = page
+  }
+
+  setTotalCount(totalCount) {
+    this._totalCount = totalCount
+  }
+
+  setLimit(limit) {
+    this._limit = limit
   }
 
   get types() {
@@ -94,5 +65,16 @@ export default class DeviceStore {
 
   get selectedBrand() {
     return this._selectedBrand
+  }
+
+  get page() {
+    return this._page
+  }
+
+  get totalCount() {
+    return this._totalCount
+  }
+  get limit() {
+    return this._limit
   }
 }

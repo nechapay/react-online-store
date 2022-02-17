@@ -5,8 +5,9 @@ const path = require('path')
 class DeviceController {
   async create(req, res, next) {
     try {
-      const { name, price, rating, brandId, typeId, info } = req.body
+      const { name, price, rating, brandId, typeId } = req.body
       const { img } = req.files
+      let { info } = req.body
       const fileName = uuid.v4() + '.jpg'
       img.mv(path.resolve(__dirname, '..', 'static', fileName))
       const device = await Device.create({ name, price, rating, img: fileName, brandId, typeId })
